@@ -1,0 +1,35 @@
+import { GroupChannel } from './GroupChannel';
+import { GroupChannelBanParams, GroupChannelCreateParams, GroupChannelFindParams, GroupChannelMessageFindParams, GroupChannelMessageParams, GroupChannelUpdateParams } from './Interfaces';
+import { BannedUser, BaseUser } from './BaseUser';
+import { BaseChannel } from './BaseChannel';
+import { GroupChannelMessage } from './GroupChannelMessage';
+import { LiveEventEmitter } from './LiveEventEmitter';
+export declare class GroupChannelModule extends LiveEventEmitter {
+    constructor(appSubId: string, userSubId: string, token: string, apiUrl: string, debug?: boolean);
+    getChannel(channel_id: string): Promise<BaseChannel>;
+    getChannelList(query: GroupChannelFindParams): Promise<any>;
+    getJoinedChannelList(query: GroupChannelFindParams): Promise<any>;
+    getMemberList(channelSubId: string): Promise<BaseUser[]>;
+    getManagerList(channelSubId: string): Promise<BaseUser[]>;
+    createChannel(createItem: GroupChannelCreateParams): Promise<GroupChannel>;
+    updateChannel(channelSubId: string, updateItem: GroupChannelUpdateParams): Promise<BaseChannel>;
+    deleteChannel(channelSubId: string): Promise<void>;
+    joinChannel(channelSubId: string): Promise<void>;
+    leaveChannel(channelSubId: string): Promise<void>;
+    registerManager(channelSubId: string, manager: string): Promise<void>;
+    deleteManager(channelSubId: string, manager: string): Promise<void>;
+    freezeChannel(channelSubId: string, freeze: boolean): Promise<BaseChannel>;
+    updateMeta(channelSubId: string, meta: Record<string, string>): Promise<BaseChannel>;
+    deleteMeta(channelSubId: string, keys: string[]): Promise<BaseChannel>;
+    readMessage(channelSubIds: string | string[]): Promise<void>;
+    deliveredMessage(channelSubId: string): Promise<void>;
+    ban(channelSubId: string, item: GroupChannelBanParams): Promise<BannedUser>;
+    unban(channelSubId: string, userSubId: string): Promise<void>;
+    getBannedList(channelSubId: string): Promise<BannedUser[]>;
+    getOnlineMemberList(channelSubId: string): Promise<string[]>;
+    sendMessage(channelSubId: string, item: GroupChannelMessageParams): Promise<GroupChannelMessage>;
+    getMessageList(channelSubId: string, query: GroupChannelMessageFindParams): Promise<any>;
+    deleteMessage(channelSubId: string, messageSubId: number): Promise<void>;
+    updateMessageMeta(channelSubId: string, messageSubId: number, meta: Record<string, string>): Promise<GroupChannelMessage>;
+    deleteMessageMeta(channelSubId: string, messageSubId: number, keys: string[]): Promise<GroupChannelMessage>;
+}

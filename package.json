@@ -1,0 +1,34 @@
+{
+  "name": "gitplelive-chat-sdk",
+  "version": "1.0.0",
+  "description": "GitpleLive Chat SDK",
+  "main": "chat.js",
+  "author": "taehee <taehee.jang@gitplecorp.com>",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "keywords": [
+    "gitplelive",
+    "gitplelive.io",
+    "chat",
+    "js"
+  ],
+  "homepage": "https://gitplelive.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finset-io/gitplelive-chat-sdk.git"
+  },
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./chat.js",
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*.js"
+  },
+  "bugs": {
+    "url": "https://github.com/finset-io/gitplelive-chat-sdk/issues"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
