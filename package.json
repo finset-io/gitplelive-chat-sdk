@@ -1,6 +1,6 @@
 {
   "name": "gitplelive-chat-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitpleLive Chat SDK",
   "main": "chat.js",
   "author": "taehee <taehee.jang@gitplecorp.com>",

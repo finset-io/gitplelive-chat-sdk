@@ -205,12 +205,12 @@ gitpleLiveChatClient.groupChannel.on('group:channel_leave', (channel, user) => {
   // handle event
 });
 // create manager
-gitpleLiveChatClient.groupChannel.on('group:channel_manager_create', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:channel_manager_create', (channel, user) => {
 
   // handle event
 });
 // delete manager
-gitpleLiveChatClient.groupChannel.on('group:channel_manager_delete', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:channel_manager_delete', (channel, user) => {
 
   // handle event
 });
@@ -225,27 +225,32 @@ gitpleLiveChatClient.groupChannel.on('group:channel_unfreeze', (channel) => {
   // handle event
 });
 // user ban
-gitpleLiveChatClient.groupChannel.on('group:channel_ban', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:channel_ban', (channel, user, ban) => {
+  // ban: {
+  //   start_at: number;
+  //   end_at: number;
+  //   reason: string;
+  // }
 
   // handle event
 });
 // user unban
-gitpleLiveChatClient.groupChannel.on('group:channel_unban', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:channel_unban', (channel, user) => {
 
   // handle event
 });
 // new message
-gitpleLiveChatClient.groupChannel.on('group:message_send', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:message_send', (channel, message) => {
 
   // handle event
 });
 // update message
-gitpleLiveChatClient.groupChannel.on('group:message_update', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:message_update', (channel, message) => {
 
   // handle event
 });
 // delete message
-gitpleLiveChatClient.groupChannel.on('group:message_delete', (channel) => {
+gitpleLiveChatClient.groupChannel.on('group:message_delete', (channel, message) => {
 
   // handle event
 });
@@ -629,6 +634,7 @@ try {
 - Server
   - https://guide-guest.gitplelive.io/code/error/
 - SDK
+
 |code|name|Desc|
 |:---|:---|:---|
 |4001|unauthorized|Unauthorized.
