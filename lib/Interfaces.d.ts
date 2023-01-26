@@ -17,6 +17,18 @@ export interface UserData {
     created_at: number;
     updated_at: number;
 }
+export interface ReportData {
+    report_id: string;
+    report_type: 'user' | 'channel' | 'message';
+    report_category: 'general' | 'spam' | 'profanity' | 'etc' | 'custom';
+    reason?: string;
+    reporting_user: UserData;
+    user?: UserData;
+    channel?: ChannelData;
+    message?: MessageData;
+    created_at: number;
+    updated_at: number;
+}
 export interface BannedUserData {
     user: UserData;
     reason: string;
@@ -149,4 +161,16 @@ export interface GroupChannelMessageFindParams {
     content?: string;
     base_message_id?: number;
 }
-//# sourceMappingURL=Interfaces.d.ts.map
+export interface ReportCreateParams {
+    report_type: 'user' | 'channel' | 'message';
+    reason?: string;
+    user_id?: string;
+    channel_type?: 'group' | 'open';
+    channel_id?: string;
+    message_id?: number;
+}
+export interface ReportFindParams {
+    limit?: number;
+    report_type?: 'user' | 'channel' | 'message';
+    next?: string;
+}

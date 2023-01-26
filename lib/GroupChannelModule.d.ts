@@ -1,5 +1,5 @@
 import { GroupChannel } from './GroupChannel';
-import { GroupChannelBanParams, GroupChannelCreateParams, GroupChannelFindParams, GroupChannelMessageFindParams, GroupChannelMessageParams, GroupChannelUpdateParams } from './Interfaces';
+import { GroupChannelBanParams, GroupChannelCreateParams, GroupChannelFindParams, GroupChannelMessageFindParams, GroupChannelMessageParams, GroupChannelUpdateParams, ReportFindParams } from './Interfaces';
 import { BannedUser, BaseUser } from './BaseUser';
 import { BaseChannel } from './BaseChannel';
 import { GroupChannelMessage } from './GroupChannelMessage';
@@ -32,4 +32,5 @@ export declare class GroupChannelModule extends LiveEventEmitter {
     deleteMessage(channelSubId: string, messageSubId: number): Promise<void>;
     updateMessageMeta(channelSubId: string, messageSubId: number, meta: Record<string, string>): Promise<GroupChannelMessage>;
     deleteMessageMeta(channelSubId: string, messageSubId: number, keys: string[]): Promise<GroupChannelMessage>;
+    getReportList(channelSubId: string, query: ReportFindParams): Promise<any>;
 }

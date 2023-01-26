@@ -1,6 +1,8 @@
 # gitplelive-chat-sdk
 Gitple Live Chat SDK
 
+reference: [SDK Guide](https://guide.gitplelive.io/docs/category/javascript)
+
 ## Table of Contents
   1. [Install](#Install)
   1. [Import and Init](#import-and-init)
@@ -52,7 +54,7 @@ ___
 
 ## Use
 ### Get User Session Token
-- api (https://guide-guest.gitplelive.io/api/users/token/)
+- api (https://guide.gitplelive.io/docs/chat/platform-api/user/user-token)
   - POST https://{Gitple Live API Host}/v1/users/{USER_ID}/token
   - header
     ```javascript
@@ -239,6 +241,23 @@ gitpleLiveChatClient.groupChannel.on('group:channel_unban', (channel, user) => {
 
   // handle event
 });
+// create report - only manager
+gitpleLiveChatClient.groupChannel.on('group:report_create', (channel, report) => {
+  // report: BaseReport {
+    // report_id: string;
+    // report_type: 'user' | 'channel' | 'message';
+    // report_category: 'general' | 'spam' | 'profanity' | 'etc' | 'custom';
+    // reporting_user: BaseUser;
+    // created_at: number;
+    // updated_at: number;
+    // reason?: string;
+    // user?: BaseUser;
+    // channel?: BaseChannel;
+    // message?: BaseMessage;
+  // }
+
+  // handle event
+});
 // new message
 gitpleLiveChatClient.groupChannel.on('group:message_send', (channel, message) => {
 
@@ -312,6 +331,7 @@ try {
 } catch (error) {
   // handle error
 }
+
 // update
 try {
   const params: UserUpdateParams {
@@ -322,6 +342,7 @@ try {
 } catch (error) {
   // handle error
 }
+
 // update meta
 try {
   const params = {key1: 'value1', key2: 'value2', ...};
@@ -329,10 +350,11 @@ try {
 } catch (error) {
   // handle error
 }
+
 // delete meta
 try {
   const params = ['key1', 'key2', ...];
-  const user = await gitpleLiveChatClient.user.updateMeta(deleteMeta);
+  const user = await gitpleLiveChatClient.user.deleteMeta(params);
 } catch (error) {
   // handle error
 }
@@ -368,6 +390,7 @@ try {
 } catch (error) {
   // handle error
 }
+
 // get channel list
 try {
   const params: GroupChannelFindParams {
@@ -382,10 +405,15 @@ try {
     include_members?: string;
     next?: string;
   }
-  const channels = await gitpleLiveChatClient.groupChannel.getChannelList(params);
+  const results = await gitpleLiveChatClient.groupChannel.getChannelList(params);
+  //  results: {
+  //    channels: [...],
+  //    next: 'Next Page Key',
+  //  }
 } catch (error) {
   // handle error
 }
+
 // get joined channel list
 try {
   const params: GroupChannelFindParams {
@@ -400,24 +428,61 @@ try {
     include_members?: string;
     next?: string;
   }
-  const channels = await gitpleLiveChatClient.groupChannel.getJoinedChannelList(params);
+  const results = await gitpleLiveChatClient.groupChannel.getJoinedChannelList(params);
+  //  results: {
+  //    channels: [...],
+  //    next: 'Next Page Key',
+  //  }
 } catch (error) {
   // handle error
 }
+
 // get channel members
 try {
   const channel_id = 'Group Channel ID';
-  const channel = await gitpleLiveChatClient.groupChannel.getMemberList(channel_id);
+  const results = await gitpleLiveChatClient.groupChannel.getMemberList(channel_id);
+  //  results: [
+  //    {
+  //      "user_id": "User ID",
+  //      "name": "User Name",
+  //      "profile_url": "User Profile URL",
+  //      "meta": {
+  //        "key": "value",
+  //        ...
+  //      },
+  //      "created_at": 1658977173917,
+  //      "updated_at": 1658977173917,
+  //      "joined_at": 1658977173917
+  //    },
+  //    ...
+  //  ]
 } catch (error) {
   // handle error
 }
+
 // get channel managers - only manager
 try {
   const channel_id = 'Group Channel ID';
-  const channel = await gitpleLiveChatClient.groupChannel.getManagerList(channel_id);
+  const results = await gitpleLiveChatClient.groupChannel.getManagerList(channel_id);
+  //  results: [
+  //    {
+  //      "user_id": "User ID",
+  //      "name": "User Name",
+  //      "profile_url": "User Profile URL",
+  //      "meta": {
+  //        "key": "value",
+  //        ...
+  //      },
+  //      "created_at": 1658977173917,
+  //      "updated_at": 1658977173917,
+  //      "joined_at": 1658977173917
+  //    },
+  //    ...
+  //  ]
 } catch (error) {
   // handle error
 }
+
 // create channel
 try {
   const params: GroupChannelCreateParams {
@@ -428,90 +493,101 @@ try {
     reuse?: boolean;
     meta?: {};
   }
-  const channels = await gitpleLiveChatClient.groupChannel.createChannel(params);
+  const channel = await gitpleLiveChatClient.groupChannel.createChannel(params);
 } catch (error) {
   // handle error
 }
+
 // update channel - only manager
 try {
   const params: GroupChannelUpdateParams {
     name?: string;
     profile_url?: string;
   }
-  const channels = await gitpleLiveChatClient.groupChannel.updateChannel(params);
+  const channel = await gitpleLiveChatClient.groupChannel.updateChannel(params);
 } catch (error) {
   // handle error
 }
+
 // delete channel - only manager
 try {
   const params: GroupChannelUpdateParams {
     name?: string;
     profile_url?: string;
   }
-  const channels = await gitpleLiveChatClient.groupChannel.updateChannel(params);
+  await gitpleLiveChatClient.groupChannel.updateChannel(params);
 } catch (error) {
   // handle error
 }
+
 // join channel
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.joinChannel(channel_id);
+  await gitpleLiveChatClient.groupChannel.joinChannel(channel_id);
 } catch (error) {
   // handle error
 }
+
 // leave channel
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.leaveChannel(channel_id);
+  await gitpleLiveChatClient.groupChannel.leaveChannel(channel_id);
 } catch (error) {
   // handle error
 }
+
 // register manager
 try {
   const channel_id = 'Group Channel ID';
   const user_id = 'User ID;
-  const channels = await gitpleLiveChatClient.groupChannel.registerManager(channel_id, user_id);
+  await gitpleLiveChatClient.groupChannel.registerManager(channel_id, user_id);
 } catch (error) {
   // handle error
 }
-// register manager
+
+// delete manager
 try {
   const channel_id = 'Group Channel ID';
   const user_id = 'User ID;
-  const channels = await gitpleLiveChatClient.groupChannel.deleteManager(channel_id, user_id);
+  await gitpleLiveChatClient.groupChannel.deleteManager(channel_id, user_id);
 } catch (error) {
   // handle error
 }
+
 // freeze channel
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.freezeChannel(channel_id, true);
+  const channel = await gitpleLiveChatClient.groupChannel.freezeChannel(channel_id, true);
 } catch (error) {
   // handle error
 }
+
 // unfreeze channel
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.freezeChannel(channel_id, false);
+  const channel = await gitpleLiveChatClient.groupChannel.freezeChannel(channel_id, false);
 } catch (error) {
   // handle error
 }
+
 // update channel meta
 try {
   const channel_id = 'Group Channel ID';
   const params = {key1: 'value1', key2: 'value2', ...};
-  const channels = await gitpleLiveChatClient.groupChannel.updateMeta(channel_id, params);
+  const channel = await gitpleLiveChatClient.groupChannel.updateMeta(channel_id, params);
 } catch (error) {
   // handle error
 }
+
 // delete channel meta
 try {
   const channel_id = 'Group Channel ID';
   const params = ['key1', 'key2', ...];
-  const channels = await gitpleLiveChatClient.groupChannel.updateMeta(channel_id, params);
+  const channel = await gitpleLiveChatClient.groupChannel.deleteMeta(channel_id, params);
 } catch (error) {
   // handle error
 }
+
 // read message
 try {
   // if single channel
@@ -520,17 +596,19 @@ try {
 
   // if multiple channels
   const channel_ids = ['Group Channel ID', 'Group Channel ID', ...];
-  const channels = await gitpleLiveChatClient.groupChannel.readMessage(channel_ids);
+  await gitpleLiveChatClient.groupChannel.readMessage(channel_ids);
 } catch (error) {
   // handle error
 }
+
 // delivered message
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.deliveredMessage(channel_id);
+  await gitpleLiveChatClient.groupChannel.deliveredMessage(channel_id);
 } catch (error) {
   // handle error
 }
+
 // user ban
 try {
   const channel_id = 'Group Channel ID';
@@ -539,32 +617,62 @@ try {
     seconds: number;
     reason?: string;
   }
-  const channels = await gitpleLiveChatClient.groupChannel.ban(channel_id, params);
+  const result = await gitpleLiveChatClient.groupChannel.ban(channel_id, params);
+  // result: {
+  //    "user": {
+  //      "user_id": "User ID",
+  //      "name": "User Name",
+  //      "created_at": 1669358202276,
+  //      "updated_at": 1669358203107
+  //    },
+  //    "start_at": 1670916132911,  // 금지 시작 일시
+  //    "end_at": 1670916132911,  // 금지 종료 일시
+  //    "reason": "Reason"
+  //  }
 } catch (error) {
   // handle error
 }
+
 // user unban
 try {
   const channel_id = 'Group Channel ID';
   const user_id = 'User ID';
-  const channels = await gitpleLiveChatClient.groupChannel.unban(channel_id, user_id);
+  await gitpleLiveChatClient.groupChannel.unban(channel_id, user_id);
 } catch (error) {
   // handle error
 }
+
 // get banned list - only manager
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.getBannedList(channel_id);
+  const results = await gitpleLiveChatClient.groupChannel.getBannedList(channel_id);
+  // results: [
+  //  {
+  //    "user": {
+  //      "user_id": "User ID",
+  //      "name": "User Name",
+  //      "created_at": 1669358202276,
+  //      "updated_at": 1669358203107
+  //    },
+  //    "start_at": 1670916132911,  // 금지 시작 일시
+  //    "end_at": 1670916132911,  // 금지 종료 일시
+  //    "reason": "Reason"
+  //  }
+  //  ...
+  //]
 } catch (error) {
   // handle error
 }
+
 // get online member in channel
 try {
   const channel_id = 'Group Channel ID';
-  const channels = await gitpleLiveChatClient.groupChannel.getOnlineMemberList(channel_id);
+  const results = await gitpleLiveChatClient.groupChannel.getOnlineMemberList(channel_id);
+  // results: ['User ID', ...]
 } catch (error) {
   // handle error
 }
+
 // send message
 try {
   const channel_id = 'Group Channel ID';
@@ -582,10 +690,11 @@ try {
     meta?: {};
   }
 
-  const channels = await gitpleLiveChatClient.groupChannel.sendMessage(channel_id, params);
+  const message = await gitpleLiveChatClient.groupChannel.sendMessage(channel_id, params);
 } catch (error) {
   // handle error
 }
+
 // get message list
 try {
   const channel_id = 'Group Channel ID';
@@ -598,41 +707,47 @@ try {
     base_message_id?: number;
   }
 
-  const channels = await gitpleLiveChatClient.groupChannel.getMessageList(channel_id, params);
+  const results = await gitpleLiveChatClient.groupChannel.getMessageList(channel_id, params);
+  //  results: {
+  //    messages: [...],
+  //  }
 } catch (error) {
   // handle error
 }
+
 // delete list
 try {
   const channel_id = 'Group Channel ID';
   const message_id = MESSAGE_ID // number;
 
-  const channels = await gitpleLiveChatClient.groupChannel.deleteMessage(channel_id, message_id);
+  await gitpleLiveChatClient.groupChannel.deleteMessage(channel_id, message_id);
 } catch (error) {
   // handle error
 }
+
 // update message meta
 try {
   const channel_id = 'Group Channel ID';
   const message_id = MESSAGE_ID // number;
   const params = {key1: 'value1', key2: 'value2', ...};
-  const channels = await gitpleLiveChatClient.groupChannel.updateMessageMeta(channel_id, message_id, params);
+  const message = await gitpleLiveChatClient.groupChannel.updateMessageMeta(channel_id, message_id, params);
 } catch (error) {
   // handle error
 }
+
 // delete message meta
 try {
   const channel_id = 'Group Channel ID';
   const message_id = MESSAGE_ID // number;
   const params = ['key1', 'key2', ...];
-  const channels = await gitpleLiveChatClient.groupChannel.deleteMessageMeta(channel_id, params);
+  const message = await gitpleLiveChatClient.groupChannel.deleteMessageMeta(channel_id, params);
 } catch (error) {
   // handle error
 }
 ```
 #### Error Code
 - Server
-  - https://guide-guest.gitplelive.io/code/error/
+  - https://guide.gitplelive.io/docs/chat/platform-api/error/error-api/
 - SDK
 
 |code|name|Desc|
