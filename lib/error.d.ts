@@ -19,6 +19,11 @@ export declare const ErrorType: {
         readonly name: "expired_token";
         readonly message: "Generate token again.";
     };
+    readonly INVALID_CHANNEL_ID: {
+        readonly code: 60104;
+        readonly name: "invalid_channel_id";
+        readonly message: "Invalid channel ID.";
+    };
     readonly SERVER_NOT_RESPONDING: {
         readonly code: 60901;
         readonly name: "server_not_responding";

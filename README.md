@@ -756,6 +756,7 @@ try {
 |60101|invalid_parameters|Check the sdk initialization init parameters.
 |60102|invalid_token|invalid session token.
 |60103|expired_token|Generate token again.
+|60104|invalid_channel_id|Invalid channel ID.
 |60901|server_not_responding|The server is not responding.
 |60902|unable_to_connect|Unable to connect to the server.
 |60903|unable_to_subscribe_event|Unable to subscribe to the event.
