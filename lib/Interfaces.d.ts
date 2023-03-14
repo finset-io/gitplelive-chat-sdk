@@ -1,4 +1,5 @@
 import { BaseUser } from './BaseUser';
+export type FilterType = 'profanity';
 export interface Config {
     host: string;
     app_id: string;
@@ -67,6 +68,10 @@ export interface MessageData {
     meta?: Record<string, string>;
     file?: FileData;
     content?: string;
+    filter?: {
+        origin_content: string;
+        type: FilterType[];
+    };
     created_at: number;
     updated_at: number;
 }
